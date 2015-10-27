@@ -120,7 +120,7 @@ public class Gps1Activity extends AppCompatActivity implements LocationListener,
         if (!enable) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Gps no esta habilitado");
-            builder.setMessage("habilitar ahora?");
+            builder.setMessage("habilitar ahora??");
             builder.setIcon(R.mipmap.ic_launcher);
             builder.setCancelable(false);
             builder.setNegativeButton("ahora no", new DialogInterface.OnClickListener() {
