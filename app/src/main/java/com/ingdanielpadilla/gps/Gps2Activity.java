@@ -8,17 +8,19 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-public class Gps2Activity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class Gps2Activity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener,com.google.android.gms.location.LocationListener {
 
     private GoogleApiClient mGoogleApiClient;
     public static final long UPDATE_INTERVAL_IN_MILLISECONDS=10000,FASTED_UPDATE_INTERVAL_IN_MILLISECONDS=UPDATE_INTERVAL_IN_MILLISECONDS/2;
     LocationRequest mLocationRequest;
+    TextView vlat,vlon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,9 @@ public class Gps2Activity extends AppCompatActivity implements GoogleApiClient.C
         setContentView(R.layout.activity_gps2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        vlat = (TextView) findViewById(R.id.lat);
+        vlon = (TextView) findViewById(R.id.lon);
 
         mGoogleApiClient=new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -76,7 +81,8 @@ public class Gps2Activity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public void onLocationChanged(Location location) {
-
+        vlat.setText(location.getLatitude() + "");
+        vlon.setText(location.getLongitude() + "");
     }
 
     @Override
@@ -99,7 +105,7 @@ public class Gps2Activity extends AppCompatActivity implements GoogleApiClient.C
         {
            mGoogleApiClient.connect();
         }
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, (com.google.android.gms.location.LocationListener) this);
+       LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, (com.google.android.gms.location.LocationListener) this);
     }
 
     public void stopGPS(View view) {
