@@ -32,14 +32,14 @@
                 android:layout_height="match_parent"
                 android:text="longitud"
                 android:textSize="25sp"/>
-            <Button
 
+            <Button
+                style="@style/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Start"
                 android:layout_marginTop="10sp"
                 android:onClick="startGPS"
-                />
+                android:text="Start" />
         </LinearLayout>
 
         <LinearLayout
