@@ -18,6 +18,7 @@ public class Gps2Activity extends AppCompatActivity implements GoogleApiClient.C
 
     private GoogleApiClient mGoogleApiClient;
     public static final long UPDATE_INTERVAL_IN_MILLISECONDS=10000,FASTED_UPDATE_INTERVAL_IN_MILLISECONDS=UPDATE_INTERVAL_IN_MILLISECONDS/2;
+    LocationRequest mLocationRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class Gps2Activity extends AppCompatActivity implements GoogleApiClient.C
                 .addApi(LocationServices.API)
                 .build();
 
-        LocationRequest mLocationRequest=new LocationRequest();
+        mLocationRequest=new LocationRequest();
         mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
         mLocationRequest.setFastestInterval(FASTED_UPDATE_INTERVAL_IN_MILLISECONDS);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -91,5 +92,20 @@ public class Gps2Activity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     public void onProviderDisabled(String s) {
 
+    }
+
+    public void startGPS(View view) {
+        if(!mGoogleApiClient.isConnected())
+        {
+           mGoogleApiClient.connect();
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, (com.google.android.gms.location.LocationListener) this);
+    }
+
+    public void stopGPS(View view) {
+        stopLocationUpdates();
+    }
+    protected void stopLocationUpdates() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (com.google.android.gms.location.LocationListener) this);
     }
 }
