@@ -35,6 +35,7 @@ public class Gps1Activity extends AppCompatActivity implements LocationListener,
     private static final int REQUEST_CODE_ASK_PERMISSIONS = 123;
     private GoogleMap mMap;
     TextView vlat, vlon;
+    String data;
     LocationManager mLocationManager;
 
     @Override
@@ -43,6 +44,8 @@ public class Gps1Activity extends AppCompatActivity implements LocationListener,
         setContentView(R.layout.activity_gps1);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        data="";
 
         vlat = (TextView) findViewById(R.id.lat);
         vlon = (TextView) findViewById(R.id.lon);
@@ -57,7 +60,7 @@ public class Gps1Activity extends AppCompatActivity implements LocationListener,
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, data, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -73,6 +76,7 @@ public class Gps1Activity extends AppCompatActivity implements LocationListener,
     public void onLocationChanged(Location location) {
         vlat.setText(location.getLatitude() + "");
         vlon.setText(location.getLongitude() + "");
+        data=data+Double.toString(location.getLatitude())+" "+ Double.toString(location.getLongitude())+" \n";
         centerMap(new LatLng(location.getLatitude(), location.getLongitude()));
 
     }
