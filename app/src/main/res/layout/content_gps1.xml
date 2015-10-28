@@ -85,6 +85,37 @@
         android:name="com.google.android.gms.maps.SupportMapFragment" />
 
 -->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <ToggleButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="New ToggleButton"
+        android:textOff="Low"
+        android:textOn="Low"
+        android:id="@+id/tb1" />
+    <ToggleButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="New ToggleButton"
+        android:textOff="Med"
+        android:textOn="Med"
+        android:id="@+id/tb2" />
+    <ToggleButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="New ToggleButton"
+        android:textOff="High"
+        android:textOn="High"
+        android:id="@+id/tb3" />
+</LinearLayout>
+
+
 
     <ScrollView
         android:layout_width="match_parent"

@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton app1 = (FloatingActionButton) findViewById(R.id.app1);
         FloatingActionButton app2 = (FloatingActionButton) findViewById(R.id.app2);
 
-        View.OnClickListener handler = new View.OnClickListener() {
+        handler = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent;
@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        app1.setOnClickListener(handler);
         app2.setOnClickListener(handler);
 
 
@@ -62,15 +63,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        app1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Gps1Activity.class);
-                Snackbar.make(view, "gps1", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                startActivity(intent);
-            }
-        });
+
 
 
     }

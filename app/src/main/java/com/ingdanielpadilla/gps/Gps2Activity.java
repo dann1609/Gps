@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -20,7 +21,11 @@ public class Gps2Activity extends AppCompatActivity implements GoogleApiClient.C
     private GoogleApiClient mGoogleApiClient;
     public static final long UPDATE_INTERVAL_IN_MILLISECONDS=10000,FASTED_UPDATE_INTERVAL_IN_MILLISECONDS=UPDATE_INTERVAL_IN_MILLISECONDS/2;
     LocationRequest mLocationRequest;
-    TextView vlat,vlon;
+    TextView vlat,vlon, tdata;
+    String data;
+    Integer priority=LocationRequest.PRIORITY_LOW_POWER;
+    View.OnClickListener handler;
+    ToggleButton tb1,tb2,tb3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +34,61 @@ public class Gps2Activity extends AppCompatActivity implements GoogleApiClient.C
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        tb1 = (ToggleButton)findViewById(R.id.tb1);
+        tb2 = (ToggleButton)findViewById(R.id.tb2);
+        tb3 = (ToggleButton)findViewById(R.id.tb3);
+
+        tb1.setChecked(true);
+
+        handler = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ToggleButton tg = (ToggleButton) view;
+                if (tg.isChecked()) {
+                    switch (view.getId()) {
+                        case R.id.tb1:
+                            tb2.setChecked(false);
+                            tb3.setChecked(false);
+                            priority=LocationRequest.PRIORITY_LOW_POWER;
+
+                            Snackbar.make(view, "gps1", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                            break;
+
+                        case R.id.tb2:
+                            tb1.setChecked(false);
+                            tb3.setChecked(false);
+                            priority=LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY;
+
+                            Snackbar.make(view, "gps2", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                            break;
+                        case R.id.tb3:
+                            tb1.setChecked(false);
+                            tb2.setChecked(false);
+                            priority=LocationRequest.PRIORITY_HIGH_ACCURACY;
+
+                            Snackbar.make(view, "gps2", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                }
+            }
+        };
+
+        tb1.setOnClickListener(handler);
+        tb2.setOnClickListener(handler);
+        tb3.setOnClickListener(handler);
+
+        data="";
+
         vlat = (TextView) findViewById(R.id.lat);
         vlon = (TextView) findViewById(R.id.lon);
+        tdata= (TextView) findViewById(R.id.data);
 
         mGoogleApiClient=new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -41,7 +99,7 @@ public class Gps2Activity extends AppCompatActivity implements GoogleApiClient.C
         mLocationRequest=new LocationRequest();
         mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
         mLocationRequest.setFastestInterval(FASTED_UPDATE_INTERVAL_IN_MILLISECONDS);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setPriority(priority);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -83,6 +141,8 @@ public class Gps2Activity extends AppCompatActivity implements GoogleApiClient.C
     public void onLocationChanged(Location location) {
         vlat.setText(location.getLatitude() + "");
         vlon.setText(location.getLongitude() + "");
+        data=data+Double.toString(location.getLatitude())+" "+ Double.toString(location.getLongitude())+" \n";
+        tdata.setText(data);
     }
 
     @Override

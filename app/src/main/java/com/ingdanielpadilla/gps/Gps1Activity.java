@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,6 +36,10 @@ public class Gps1Activity extends AppCompatActivity implements LocationListener,
     TextView vlat, vlon, tdata;
     String data;
     LocationManager mLocationManager;
+    View.OnClickListener handler;
+    ToggleButton tb1,tb2,tb3;
+    int accuracy=Criteria.ACCURACY_LOW,power=Criteria.POWER_LOW;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,61 @@ public class Gps1Activity extends AppCompatActivity implements LocationListener,
         setContentView(R.layout.activity_gps1);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        tb1 = (ToggleButton)findViewById(R.id.tb1);
+        tb2 = (ToggleButton)findViewById(R.id.tb2);
+        tb3 = (ToggleButton)findViewById(R.id.tb3);
+
+        tb1.setChecked(true);
+
+        handler = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ToggleButton tg = (ToggleButton) view;
+                if (tg.isChecked()) {
+                    switch (view.getId()) {
+                        case R.id.tb1:
+                            tb2.setChecked(false);
+                            tb3.setChecked(false);
+                            accuracy=Criteria.ACCURACY_LOW;
+                            power=Criteria.POWER_LOW;
+
+                            Snackbar.make(view, "gps1", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                            break;
+
+                        case R.id.tb2:
+                            tb1.setChecked(false);
+                            tb3.setChecked(false);
+                            accuracy=Criteria.ACCURACY_MEDIUM;
+                            power=Criteria.POWER_MEDIUM;
+
+                            Snackbar.make(view, "gps2", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                            break;
+                        case R.id.tb3:
+                            tb1.setChecked(false);
+                            tb2.setChecked(false);
+                            accuracy=Criteria.ACCURACY_HIGH;
+                            power=Criteria.POWER_HIGH;
+
+                            Snackbar.make(view, "gps2", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                }
+            }
+        };
+
+        tb1.setOnClickListener(handler);
+        tb2.setOnClickListener(handler);
+        tb3.setOnClickListener(handler);
+
+
 
         data="";
 
@@ -60,7 +120,7 @@ public class Gps1Activity extends AppCompatActivity implements LocationListener,
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, data, Snackbar.LENGTH_LONG)
+                Snackbar.make(view, Long.toString(System.currentTimeMillis()), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -78,6 +138,7 @@ public class Gps1Activity extends AppCompatActivity implements LocationListener,
         vlon.setText(location.getLongitude() + "");
         data=data+Double.toString(location.getLatitude())+" "+ Double.toString(location.getLongitude())+" \n";
         tdata.setText(data);
+
         //centerMap(new LatLng(location.getLatitude(), location.getLongitude()));
 
     }
@@ -147,8 +208,9 @@ public class Gps1Activity extends AppCompatActivity implements LocationListener,
 
     private String getBestProvider() {
         Criteria mCriteria = new Criteria();
-        mCriteria.setAccuracy(Criteria.ACCURACY_LOW);
-        mCriteria.setPowerRequirement(Criteria.POWER_LOW);
+        mCriteria.setHorizontalAccuracy(accuracy);
+        mCriteria.setVerticalAccuracy(accuracy);
+        mCriteria.setPowerRequirement(power);
         String bestProvider = mLocationManager.getBestProvider(mCriteria, true);
         Snackbar.make(findViewById(R.id.lat), "Provider: " + bestProvider, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();

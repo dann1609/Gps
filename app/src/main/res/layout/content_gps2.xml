@@ -10,53 +10,56 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.ingdanielpadilla.gps.Gps1Activity"
-    tools:showIn="@layout/activity_gps1">
+    tools:context="com.ingdanielpadilla.gps.Gps2Activity"
+    tools:showIn="@layout/activity_gps2">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="latitud"
                 android:textSize="25sp"/>
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="longitud"
                 android:textSize="25sp"/>
+
             <Button
-                android:background="@color/colorAccent"
+                style="@style/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Start"
                 android:layout_marginTop="10sp"
                 android:onClick="startGPS"
-                />
+                android:text="Start" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/lat"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="valor lat"
                 android:textSize="25sp"/>
             <TextView
                 android:id="@+id/lon"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="valor lon"
                 android:textSize="25sp"/>
             <Button
@@ -73,13 +76,53 @@
 
 
     </LinearLayout>
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:map="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
-        android:layout_height="match_parent" android:id="@+id/map"
-        tools:context="com.ingdanielpadilla.gps.MapsActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
+    <!--
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            xmlns:map="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+            android:layout_height="match_parent" android:id="@+id/map"
+            tools:context="com.ingdanielpadilla.gps.MapsActivity"
+            android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ToggleButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="New ToggleButton"
+            android:textOff="Low"
+            android:textOn="Low"
+            android:id="@+id/tb1" />
+        <ToggleButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="New ToggleButton"
+            android:textOff="Med"
+            android:textOn="Med"
+            android:id="@+id/tb2" />
+        <ToggleButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="New ToggleButton"
+            android:textOff="High"
+            android:textOn="High"
+            android:id="@+id/tb3" />
+    </LinearLayout>
 
 
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
 </LinearLayout>
