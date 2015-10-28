@@ -25,16 +25,14 @@ import android.widget.TextView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 public class Gps1Activity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
 
     private static final int REQUEST_CODE_ASK_PERMISSIONS = 123;
     private GoogleMap mMap;
-    TextView vlat, vlon;
+    TextView vlat, vlon, tdata;
     String data;
     LocationManager mLocationManager;
 
@@ -49,11 +47,13 @@ public class Gps1Activity extends AppCompatActivity implements LocationListener,
 
         vlat = (TextView) findViewById(R.id.lat);
         vlon = (TextView) findViewById(R.id.lon);
+        tdata = (TextView) findViewById(R.id.data);
+
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+       // SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+         //       .findFragmentById(R.id.map);
+       // mapFragment.getMapAsync(this);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -77,7 +77,8 @@ public class Gps1Activity extends AppCompatActivity implements LocationListener,
         vlat.setText(location.getLatitude() + "");
         vlon.setText(location.getLongitude() + "");
         data=data+Double.toString(location.getLatitude())+" "+ Double.toString(location.getLongitude())+" \n";
-        centerMap(new LatLng(location.getLatitude(), location.getLongitude()));
+        tdata.setText(data);
+        //centerMap(new LatLng(location.getLatitude(), location.getLongitude()));
 
     }
 
@@ -170,7 +171,7 @@ public class Gps1Activity extends AppCompatActivity implements LocationListener,
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        /* mMap = googleMap;
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -182,7 +183,7 @@ public class Gps1Activity extends AppCompatActivity implements LocationListener,
             mMap.moveCamera(CameraUpdateFactory.newLatLng(lastLocation));
         }
 
-
+        */
     }
 
     private void centerMap(LatLng mapCenter){
